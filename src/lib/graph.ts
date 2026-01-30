@@ -3,8 +3,12 @@ import axios from 'axios';
 // Your API Key
 const API_KEY = process.env.GRAPH_API_KEY;
 
+if (!API_KEY) {
+    console.error("GRAPH_API_KEY is not defined");
+}
+
 // Aave V3 Subgraph
-const GRAPH_ENDPOINT = `https://gateway.thegraph.com/api/${API_KEY.trim()}/subgraphs/id/JCNWRypm7FYwV8fx5HhzZPSFaMxgkPuw4TnR3Gpi81zk`;
+const GRAPH_ENDPOINT = `https://gateway.thegraph.com/api/${API_KEY}/subgraphs/id/JCNWRypm7FYwV8fx5HhzZPSFaMxgkPuw4TnR3Gpi81zk`;
 
 const ASSETS = [
     "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", // USDC

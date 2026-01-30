@@ -4,6 +4,9 @@ const { Server } = require("socket.io");
 const axios = require("axios");
 
 const dev = process.env.NODE_ENV !== "production";
+const { loadEnvConfig } = require('@next/env');
+loadEnvConfig(process.cwd(), dev);
+
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
