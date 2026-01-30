@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Your API Key
-const API_KEY = "ed94c57bad1fcf3d80626d9e274cf815";
+const API_KEY = process.env.GRAPH_API_KEY;
 
 // Aave V3 Subgraph
 const GRAPH_ENDPOINT = `https://gateway.thegraph.com/api/${API_KEY.trim()}/subgraphs/id/JCNWRypm7FYwV8fx5HhzZPSFaMxgkPuw4TnR3Gpi81zk`;

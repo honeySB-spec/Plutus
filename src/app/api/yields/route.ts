@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // Re-using the same config as the server
 // (In a large app, we'd put this config in a shared file, but this is fine for a hackathon)
-const API_KEY = "ed94c57bad1fcf3d80626d9e274cf815";
+const API_KEY = process.env.GRAPH_API_KEY;
 const GRAPH_ENDPOINT = `https://gateway.thegraph.com/api/${API_KEY}/subgraphs/id/JCNWRypm7FYwV8fx5HhzZPSFaMxgkPuw4TnR3Gpi81zk`;
 
 const ASSETS = [

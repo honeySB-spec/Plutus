@@ -8,7 +8,7 @@ const app = next({ dev });
 const handle = app.getRequestHandler();
 
 // --- CONFIGURATION ---
-const API_KEY = "ed94c57bad1fcf3d80626d9e274cf815";
+const API_KEY = process.env.GRAPH_API_KEY;
 const GRAPH_ENDPOINT = `https://gateway.thegraph.com/api/${API_KEY}/subgraphs/id/JCNWRypm7FYwV8fx5HhzZPSFaMxgkPuw4TnR3Gpi81zk`;
 const ASSETS = [
     "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", // USDC
