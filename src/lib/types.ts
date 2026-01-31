@@ -15,6 +15,8 @@ export interface YieldData {
     protocol: string;
     symbol: string;
     apy: number;
+    apyBase: number;
+    apyReward: number | null;
     tvl: number;
     chain: string;
     risk: string;

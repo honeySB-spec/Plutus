@@ -7,7 +7,7 @@ const openai = new OpenAI({
 });
 
 export async function POST(request: Request) {
-    const { messages } = await request.json(); // Array of chat history
+    const { messages, agentBalance } = await request.json(); // Array of chat history & balance
     const marketData = await getGlobalMarketData();
 
     const systemPrompt = `
@@ -15,12 +15,16 @@ export async function POST(request: Request) {
     
     **YOUR DATA SOURCE:**
     ${JSON.stringify(marketData)}
+    
+    **YOUR CURRENT BALANCE:**
+    ${agentBalance || 0} ETH
 
     **YOUR CAPABILITIES:**
     1. ANALYZE: Compare APYs across Aave, Compound, and Uniswap.
     2. ASSESS RISK: Warn users about "Impermanent Loss" in Uniswap vs "Smart Contract Risk" in Lending.
     3. EXECUTE: If the user asks to "invest", "swap", or "move funds", you must SIMULATE the action using the x402 Protocol.
-    
+    4. BUDGET: You cannot invest more than your current balance.
+
     **EXECUTION FORMAT:**
     When taking action, output a block like this:
     [ACTION_TRIGGER]
