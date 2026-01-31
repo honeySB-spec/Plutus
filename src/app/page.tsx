@@ -5,7 +5,8 @@ import { io } from "socket.io-client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
-import { Activity, DollarSign, TrendingUp, Wifi } from "lucide-react";
+import { Activity, DollarSign, TrendingUp, Wifi, Bot, Sparkles, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 type AssetData = {
   symbol: string;
@@ -19,6 +20,8 @@ export default function Dashboard() {
   const [data, setData] = useState<AssetData[]>([]);
   const [history, setHistory] = useState<any[]>([]);
   const [isConnected, setIsConnected] = useState(false);
+  const [aiAnalysis, setAiAnalysis] = useState<string | null>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
 
   useEffect(() => {
     // 1. Connect to our custom server
@@ -59,6 +62,27 @@ export default function Dashboard() {
     };
   }, []);
 
+  const runAiAnalysis = async () => {
+    if (data.length === 0) return;
+
+    setIsAnalyzing(true);
+    setAiAnalysis("🤖 X402 Agent is analyzing on-chain opportunities...");
+
+    try {
+      const res = await fetch("/api/agent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ marketData: data }),
+      });
+      const json = await res.json();
+      setAiAnalysis(json.analysis);
+    } catch (err) {
+      setAiAnalysis("⚠️ Agent connection failed. Try again.");
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 p-8">
       <div className="max-w-6xl mx-auto space-y-8">
@@ -77,6 +101,49 @@ export default function Dashboard() {
             {isConnected ? "Live Socket Connected" : "Connecting..."}
           </Badge>
         </div>
+
+        {/* AI AGENT SECTION */}
+        <Card className="border-blue-200 bg-blue-50/50">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-xl flex items-center gap-2 text-blue-800">
+              <Bot className="h-6 w-6" />
+              Agent X402
+            </CardTitle>
+            <Button
+              onClick={runAiAnalysis}
+              disabled={isAnalyzing}
+              size="sm"
+              className="bg-blue-600 hover:bg-blue-700"
+            >
+              {isAnalyzing ? (
+                <>
+                  <Sparkles className="mr-2 h-4 w-4 animate-spin" /> Analyzing...
+                </>
+              ) : (
+                <>
+                  <Sparkles className="mr-2 h-4 w-4" /> Run Analysis
+                </>
+              )}
+            </Button>
+          </CardHeader>
+          <CardContent>
+            {aiAnalysis ? (
+              <div className="flex items-start gap-3 p-3 bg-white rounded-lg border border-blue-100 shadow-sm animate-in fade-in slide-in-from-bottom-2">
+                <div className="mt-1 bg-blue-100 p-1.5 rounded-full">
+                  <Bot className="h-4 w-4 text-blue-700" />
+                </div>
+                <div className="text-slate-700 text-sm leading-relaxed">
+                  {/* Allows bolding in the response */}
+                  <span dangerouslySetInnerHTML={{ __html: aiAnalysis.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br/>') }} />
+                </div>
+              </div>
+            ) : (
+              <p className="text-sm text-slate-500 italic">
+                Ready to analyze live market data via x402 Protocol optimization engine...
+              </p>
+            )}
+          </CardContent>
+        </Card>
 
         {/* ASSET CARDS */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
