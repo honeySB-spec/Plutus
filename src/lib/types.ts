@@ -23,7 +23,27 @@ export interface YieldData {
     poolId: string;
 }
 
+// Parameters for filtering and pagination
+export interface YieldApiOptions {
+    symbol?: string;    // Filter by symbol (e.g., 'USDC')
+    protocol?: string;  // Filter by protocol name
+    chain?: string;     // Filter by chain
+    minTvl?: number;    // Minimum TVL
+    minApy?: number;    // Minimum APY
+    page?: number;      // Page number (1-based)
+    limit?: number;     // Items per page
+}
+
+export interface PaginationMetadata {
+    count: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+    totalItems: number;
+}
+
 export interface GlobalMarketData {
     timestamp: string;
     data: YieldData[];
+    pagination?: PaginationMetadata;
 }

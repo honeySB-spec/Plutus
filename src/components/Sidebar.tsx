@@ -10,7 +10,8 @@ import {
     Bot,
     Settings,
     LogOut,
-    Hexagon
+    Hexagon,
+    Code
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -19,6 +20,7 @@ const NAV_ITEMS = [
     { label: "Market", href: "/market", icon: BarChart2 },
     { label: "Wallet", href: "/wallet", icon: CreditCard },
     { label: "AI Agent", href: "/agent", icon: Bot },
+    { label: "Developers", href: "/developers", icon: Code },
 ];
 
 export function Sidebar() {
