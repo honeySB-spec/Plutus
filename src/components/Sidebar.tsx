@@ -31,7 +31,7 @@ export function Sidebar() {
             {/* LOGO */}
             <div className="h-20 flex items-center justify-center lg:justify-start lg:px-8 border-b border-sidebar-border/10">
                 <Hexagon className="h-8 w-8 text-white fill-white" />
-                <span className="hidden lg:block ml-3 text-xl font-bold text-white tracking-wide">Zarss</span>
+                <span className="hidden lg:block ml-3 text-xl font-bold text-white tracking-wide">Plutus</span>
             </div>
 
             {/* USER PROFILE (Simplified) */}
