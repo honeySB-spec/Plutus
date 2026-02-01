@@ -14,6 +14,8 @@ const PROTOCOL_SLUGS = [
     "silo-v2"
 ];
 
+import { fetchYieldData } from "./graph";
+
 async function fetchDefiLlamaYields(): Promise<DefiLlamaPool[]> {
     try {
         const response = await fetch("https://yields.llama.fi/pools");
@@ -29,7 +31,10 @@ async function fetchDefiLlamaYields(): Promise<DefiLlamaPool[]> {
 }
 
 export async function getGlobalMarketData(): Promise<GlobalMarketData> {
-    const allPools = await fetchDefiLlamaYields();
+    const [allPools, graphYields] = await Promise.all([
+        fetchDefiLlamaYields(),
+        fetchYieldData()
+    ]);
 
     // Map to normalized format first so we can sort uniformally
     // Filter for specific assets
@@ -67,6 +72,14 @@ export async function getGlobalMarketData(): Promise<GlobalMarketData> {
             poolId: 'mock-cevusd-pool'
         });
     }
+
+    // Merge Graph Data
+    // We add them to the list. If duplicates exist (e.g. Aave V3 from DefiLlama and Graph), 
+    // we might want to deduplicate or just append. 
+    // DefiLlama usually covers Aave V3. 
+    // But since the user specifically requested Graph integration, let's append it or prioritize it.
+    // For now, let's append.
+    normalizedPools.push(...graphYields);
 
     // Sort by APY desc
     normalizedPools.sort((a, b) => b.apy - a.apy);
