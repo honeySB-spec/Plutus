@@ -1,4 +1,5 @@
 # Plutus 🚀
+# [ Demo Video ](https://youtu.be/_wqJNcnHbG0)
 
 **Plutus** is an intelligent, real-time DeFi dashboard designed to simplify yield farming and portfolio management on Ethereum. By aggregating live data from major protocols and integrating an AI-driven analyst, Plutus empowers users to discover high-yield opportunities and make data-backed investment decisions with confidence.
 
