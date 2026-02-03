@@ -71,7 +71,7 @@ Plutus is built on a custom hybrid architecture to ensure maximum performance an
 *   **Client-Side State**: React hooks subscribe to the WebSocket feed, updating the UI instantly without page reloads.
 *   **AI Integration**: When you ask the Agent a question, the frontend bundles your query with a snapshot of the current market state and sends it to `/api/agent`.
 
-```mermaid
+``` 
 graph TD
     A[The Graph / DefiLlama] -->|Poll (10s)| B(Node.js Custom Server)
     B -->|Emit Update| C(WebSocket)
